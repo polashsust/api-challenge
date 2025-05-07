@@ -33,14 +33,24 @@ This is a complete implementation of the specified REST API with procedural data
 
 ---
 
-## Database Procedures Used
+The following MySQL stored procedures are required (found in `database/procedures.sql`):
 
-- `GetServerTime` → returns current `NOW()` from the DB
-- `get_flagbits_for_transaction` → returns all active flagbits for a given transaction
-- `validate_apikey` → checks if a token exists and is valid in current time window
-- `stamd_aendern_erstellen_flagbit_ref` → central logic to set or remove flagbits
+- `GetServerTime()` — returns current server time
+- `validate_apikey(apiKey)` — validates token from api_apikey table
+- `get_flagbits_for_transaction(trans_id)` — fetches active flagbits for a transaction
+- `stamd_aendern_erstellen_flagbit_ref(...)` — sets or removes flagbit for a data record
 
----
+Please run the SQL in `database/procedures.sql` before using the API.
+
+## API Testing with Postman
+
+You can test all endpoints using the included Postman collection:
+
+ `postman_collection.json`
+
+1. Import into Postman
+2. Use a valid Bearer token from the `api_apikey` table
+3. Run each step (1–6) as defined
 
 ## Testing
 
