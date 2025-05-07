@@ -2,7 +2,15 @@
 
 This is a complete implementation of the specified REST API with procedural database integration and token-based access control.
 
-## ✅ Features Implemented
+## System Stack
+
+- **Laravel**: 12.12.0
+- **PHP**: 8.2.12 (ZTS Visual C++ 2019 x64)
+- **Database**: MariaDB 10.4.32
+- **Web Server**: Laravel built-in (`php artisan serve`)
+- **Environment**: Windows (XAMPP)
+
+## Features Implemented
 
 ### Step 1: Get Current Server Time
 - Endpoint: `GET /api/time`
@@ -30,8 +38,6 @@ This is a complete implementation of the specified REST API with procedural data
 - Endpoint: `POST /api/flagbit/remove`
 - Protected: Requires `ist_masterkey = 1`
 - Uses procedure `stamd_aendern_erstellen_flagbit_ref` with `modus = 2`
-
----
 
 The following MySQL stored procedures are required (found in `database/procedures.sql`):
 
