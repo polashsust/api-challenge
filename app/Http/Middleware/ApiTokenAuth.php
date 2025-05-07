@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 
 class ApiTokenAuth
 {
@@ -46,8 +47,13 @@ class ApiTokenAuth
      */
     private function validateToken(string $token): ?object
     {
-        $result = DB::select("CALL validate_apikey(?)", [$token]);
-        return $result[0] ?? null;
+        try {
+            $result = DB::select("CALL validate_apikey(?)", [$token]);
+            return $result[0] ?? null;
+        } catch (\Exception $e) {
+            Log::error('Token validation failed', ['error' => $e->getMessage()]);
+            return null;
+        }
     }
 
     /**
@@ -75,6 +81,7 @@ class ApiTokenAuth
      */
     private function unauthorized(string $message, int $code = 401): Response
     {
+        Log::warning('Unauthorized access attempt', ['message' => $message]);
         return response()->json(['error' => $message], $code);
     }
 }
